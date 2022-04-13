@@ -22,6 +22,12 @@ export default createStore({
 		deleteTodo: (state, id) => {
 			state.todos = state.todos.filter((todo) => todo.id != id);
 		},
+		updateTodo: (state, updateTodo) => {
+			const index = state.todos.findIndex((todo) => todo.id === updateTodo.id);
+			if (index != -1) {
+				state.todos.splice(index, 1, updateTodo);
+			}
+		},
 	},
 	actions: {
 		// use axios to make a get request
@@ -57,9 +63,15 @@ export default createStore({
 			const response = await axios.get(
 				`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`
 			);
-
 			// commit  the setTodos because that is going to be passed to the ui after the user selects a limit
 			commit("setTodos", response.data);
+		},
+		async updateTodo({ commit }, updateTodo) {
+			const response = await axios.put(
+				`https://jsonplaceholder.typicode.com/todos/${updateTodo.id}`,
+				updateTodo
+			);
+			commit("updateTodo", response.data);
 		},
 	},
 	modules: {},
