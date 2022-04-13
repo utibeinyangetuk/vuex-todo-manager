@@ -27,17 +27,17 @@ export default createStore({
 		// use axios to make a get request
 		async fetchTodos({ commit }) {
 			const response = await axios.get(
-				"https://jsonplaceholder.typicode.com/todos"
+				"https://jsonplaceholder.typicode.com/todos?_limit=100"
 			);
 
-			// call a commit or mutation
+			// call a  mutation
 			// First param is the mutation and second is what you want to pass in
 			commit("setTodos", response.data);
 		},
 		// use axios to make a post request
 		async addTodo({ commit }, title) {
 			const response = await axios.post(
-				"https://jsonplaceholder.typicode.com/todos",
+				"https://jsonplaceholder.typicode.com/todos?_limit=100",
 				{ title, completed: false }
 			);
 			commit("newTodo", response.data);
@@ -47,6 +47,19 @@ export default createStore({
 		async deleteTodo({ commit }, id) {
 			await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
 			commit("deleteTodo", id);
+		},
+		// pass the event parameter to be able to get the value that is selected
+		async filterTodos({ commit }, e) {
+			//Get the selected number
+			const limit = parseInt(
+				e.target.options[e.target.options.selectedIndex].innerText
+			);
+			const response = await axios.get(
+				`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`
+			);
+
+			// commit  the setTodos because that is going to be passed to the ui after the user selects a limit
+			commit("setTodos", response.data);
 		},
 	},
 	modules: {},

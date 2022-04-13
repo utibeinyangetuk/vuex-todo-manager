@@ -1,6 +1,6 @@
 # vuex-todo-manager
 ```
-A todo manager built with vuex
+A mock todo manager built with vuejs, vuex(state management library) and axios
 ```
 
 ## Project setup
