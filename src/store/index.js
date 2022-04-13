@@ -3,27 +3,28 @@ import axios from "axios";
 
 export default createStore({
 	state: {
-		todos: [
-			{
-				id: 1,
-				title: "Todo one",
-			},
-			{
-				id: 2,
-				title: "Todo two",
-			},
-			{
-				id: 3,
-				title: "Todo three",
-			},
-		],
+		todos: [],
 	},
 	getters: {
 		allTodos: (state) => {
 			return state.todos;
 		},
 	},
-	mutations: {},
-	actions: {},
+	mutations: {
+		setTodos: (state, todos) => {
+			// Takes the state.todos and set it to the todos that are passed in
+			state.todos = todos;
+		},
+	},
+	actions: {
+		// use axios to fetch mock data
+		async fetchTodos({ commit }) {
+			const response = await axios.get(
+				"https://jsonplaceholder.typicode.com/todos"
+			);
+			// First param is the mutation and second is what you want to pass in
+			commit("setTodos", response.data);
+		},
+	},
 	modules: {},
 });
