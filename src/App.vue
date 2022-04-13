@@ -20,12 +20,6 @@
 </script>
 
 <style>
-	body {
-		font-family: "franklin gothic medium", "arial narrow", Arial, Helvetica,
-			sans-serif;
-		line-height: 1.6;
-		background: #e8f7f0;
-	}
 	.container {
 		max-width: 1100px;
 		margin: auto;
